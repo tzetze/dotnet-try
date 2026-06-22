@@ -1,0 +1,45 @@
+<main class="container">
+  <h1>📋 Task Manager</h1>
+  <p class="subtitle">Angular frontend ↔ ASP.NET Core API</p>
+
+  <!-- Add-task form. (ngSubmit) fires on submit; [(ngModel)] two-way-binds inputs. -->
+  <form class="add-form" (ngSubmit)="addTask()">
+    <input
+      type="text"
+      placeholder="What needs doing?"
+      [(ngModel)]="newTitle"
+      name="title" />
+
+    <select [(ngModel)]="newPriority" name="priority">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+
+    <button type="submit">Add</button>
+  </form>
+
+  <!-- @if / @for are Angular's built-in control flow (no *ngIf/*ngFor needed). -->
+  @if (tasks().length === 0) {
+    <p class="empty">No tasks yet — add one above.</p>
+  } @else {
+    <ul class="task-list">
+      @for (task of tasks(); track task.id) {
+        <li [class.done]="task.isDone">
+          <input
+            type="checkbox"
+            [checked]="task.isDone"
+            (change)="toggleDone(task)" />
+
+          <span class="title">{{ task.title }}</span>
+
+          <span class="badge" [class]="task.priority.toLowerCase()">
+            {{ task.priority }}
+          </span>
+
+          <button class="delete" (click)="deleteTask(task)">✕</button>
+        </li>
+      }
+    </ul>
+  }
+</main>
