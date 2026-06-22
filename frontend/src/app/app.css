@@ -47,6 +47,37 @@ h1 {
   background: #4338ca;
 }
 
+/* Holds the description input + the live character counter in its corner. */
+.description-field {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.description-field input[type='text'] {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.char-count {
+  position: absolute;
+  right: 0.6rem;
+  bottom: -1.1rem;
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* Description shown under a task's title. */
+.title .description {
+  display: block;
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-top: 0.15rem;
+}
+
 .task-list {
   list-style: none;
   padding: 0;

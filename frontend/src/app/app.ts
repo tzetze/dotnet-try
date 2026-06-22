@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from './task.service';
 import { Task, Priority } from './task.model';
@@ -18,6 +18,12 @@ export class App implements OnInit {
   tasks = signal<Task[]>([]);
   newTitle = signal('');
   newPriority = signal<Priority>('Medium');
+  newDescription = signal('');
+
+  // Server caps the description at 500 chars; mirror it here for the UI hint.
+  readonly maxDescriptionLength = 500;
+  // computed() re-derives automatically whenever newDescription changes.
+  descriptionRemaining = computed(() => this.maxDescriptionLength - this.newDescription().length);
 
   // ngOnInit is a lifecycle hook: Angular calls it once after the component
   // is created — a good place to load initial data.
@@ -35,11 +41,12 @@ export class App implements OnInit {
     if (!title) return;
 
     this.taskService
-      .create({ title, priority: this.newPriority(), isDone: false })
+      .create({ title, priority: this.newPriority(), isDone: false, description: this.newDescription().trim() })
       .subscribe(created => {
         // Append the created task (with its server-assigned id) to the list.
         this.tasks.update(list => [...list, created]);
         this.newTitle.set('');
+        this.newDescription.set('');
       });
   }
 

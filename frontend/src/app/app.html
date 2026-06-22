@@ -16,6 +16,18 @@
       <option value="High">High</option>
     </select>
 
+    <!-- Optional description. maxlength stops typing past the server's 500 cap;
+         the counter shows how much room is left. -->
+    <label class="description-field">
+      <input
+        type="text"
+        placeholder="Optional description"
+        [(ngModel)]="newDescription"
+        name="description"
+        [maxlength]="maxDescriptionLength" />
+      <span class="char-count">{{ descriptionRemaining() }} left</span>
+    </label>
+
     <button type="submit">Add</button>
   </form>
 
@@ -31,7 +43,12 @@
             [checked]="task.isDone"
             (change)="toggleDone(task)" />
 
-          <span class="title">{{ task.title }}</span>
+          <span class="title">
+            {{ task.title }}
+            @if (task.description) {
+              <small class="description">{{ task.description }}</small>
+            }
+          </span>
 
           <span class="badge" [class]="task.priority.toLowerCase()">
             {{ task.priority }}

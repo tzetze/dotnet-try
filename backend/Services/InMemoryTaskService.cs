@@ -13,7 +13,7 @@ public class InMemoryTaskService : ITaskService
     public InMemoryTaskService()
     {
         // Seed a couple of tasks so the UI isn't empty on first run.
-        Add(new TaskItem { Title = "Learn C# basics", Priority = Priority.High });
+        Add(new TaskItem { Title = "Learn C# basics", Priority = Priority.High, Description = "Variables, types, LINQ" });
         Add(new TaskItem { Title = "Try an Angular component", Priority = Priority.Medium });
     }
 
@@ -47,6 +47,7 @@ public class InMemoryTaskService : ITaskService
             existing.Title = updated.Title;
             existing.IsDone = updated.IsDone;
             existing.Priority = updated.Priority;
+            existing.Description = updated.Description;
             return true;
         }
     }
