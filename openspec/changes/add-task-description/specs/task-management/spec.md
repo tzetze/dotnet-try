@@ -55,3 +55,9 @@ task and SHALL display the description for any task that has one.
 
 - **WHEN** a task has no description
 - **THEN** no description text is shown for that task in the list
+
+#### Scenario: Description input shows remaining characters and enforces the limit
+
+- **WHEN** the user types in the description input
+- **THEN** the number of remaining characters (out of 500) is shown near the input
+- **AND** the input does not accept more than 500 characters

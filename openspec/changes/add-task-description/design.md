@@ -48,13 +48,25 @@ short description that flows end to end through the existing layers.
   - *Rationale:* minimal, follows the existing signal-based pattern for
     `newTitle`/`newPriority`.
 
+- **Client-side length hint.** Set `maxlength="500"` on the description input so
+  the browser prevents over-long entries, and show a live remaining-character
+  count (e.g. `123 left`) in the corner of the input. Define `maxDescriptionLength = 500`
+  as a constant on the component and derive the remaining count from the
+  `newDescription` signal.
+  - *Rationale:* surfaces the limit before the user hits it instead of relying on
+    a server 400. The server stays the source of truth (the spec's validation
+    requirement is unchanged); this is purely a convenience.
+  - *Alternative considered:* no client limit, rely solely on the server error.
+    Rejected — worse UX; the user only learns the limit after a failed submit.
+
 ## Risks / Trade-offs
 
 - **Empty string vs. null semantics** → Standardize on empty string everywhere;
   the UI only renders the description block when the string is non-empty.
-- **Client-side length not enforced** → The server rejects >500 chars; the UI
-  can optionally add a `maxlength` attribute as a convenience, but the server is
-  the source of truth.
+- **Client-side limit drifts from server limit** → Both use 500; keep them in
+  sync (a single `maxDescriptionLength` constant on the client, `[MaxLength(500)]`
+  on the server). The server remains the source of truth — `maxlength` and the
+  counter are convenience only.
 - **No edit-description UI for existing tasks** → Accepted as a non-goal; the
   backend already supports it via PUT for when an edit form is added later.
 

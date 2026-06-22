@@ -17,11 +17,13 @@
 
 - [ ] 4.1 Add `description?: string;` to the `Task` interface in `frontend/src/app/task.model.ts`
 - [ ] 4.2 Add a `newDescription = signal('')` to the `App` component and include `description` in the `create({...})` payload; reset it after add
+- [ ] 4.3 Add a `maxDescriptionLength = 500` constant and a computed/derived remaining count (`maxDescriptionLength - newDescription().length`)
 
 ## 5. Frontend UI
 
-- [ ] 5.1 Add a description `<input>` (bound with `[(ngModel)]="newDescription"`, `name="description"`) to the add-task form in `app.html`
-- [ ] 5.2 In the task list, render `task.description` (e.g. `@if (task.description) { ... }`) below the title
+- [ ] 5.1 Add a description `<input>` (bound with `[(ngModel)]="newDescription"`, `name="description"`, `maxlength="500"`) to the add-task form in `app.html`
+- [ ] 5.2 Show the remaining-character count in the corner of the description input (e.g. `{{ maxDescriptionLength - newDescription().length }} left`)
+- [ ] 5.3 In the task list, render `task.description` (e.g. `@if (task.description) { ... }`) below the title
 
 ## 6. End-to-end verification
 
